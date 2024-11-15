@@ -23,7 +23,7 @@
 
 - name: create a docker directory
   file:
-    path: /home/danielle/dockerfiles
+    path: /home/danielle/dockerfiles/Dockerfile
     state: directory
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
