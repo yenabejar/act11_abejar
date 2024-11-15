@@ -1,0 +1,16 @@
+---
+ - hosts: server
+   become: true
+   pre_tasks:
+
+   - name: install ubuntu updates
+     tags: always
+     apt:
+       update_cache: yes
+     changed_when: false
+     when: ansible_distribution == "Ubuntu"
+
+ - hosts: server
+   become: true
+   roles:
+    - docker

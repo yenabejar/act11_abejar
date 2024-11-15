@@ -1,0 +1,38 @@
+---
+- name: start docker service
+  tags: prepare
+  become: true
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: verify the docker group
+  tags: prepare
+  become: true
+  group:
+    name: docker
+    state: present
+
+- name: add the user to the docker group
+  tags: prepare
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+
+- name: create a docker directory
+  file:
+    path: /home/danielle/dockerfiles
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '777'
+
+- name: build a docker image
+  become: true
+  docker_image:
+    path: /home/danielle/dockerfiles/
+    name: apache_database_image
+    tag: latest
+    state: present
