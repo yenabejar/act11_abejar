@@ -23,8 +23,17 @@
 
 - name: create a docker directory
   file:
-    path: /home/danielle/dockerfiles/Dockerfile
+    path: /home/danielle/dockerfiles
     state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '777'
+
+- name: copy docker file
+  become: true
+  copy:
+    src: /home/danielle/act11_abejar/docker/Dockerfile
+    dest: /home/danielle/dockerfiles/
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: '777'
